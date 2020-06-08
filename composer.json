@@ -1,0 +1,20 @@
+{
+  "require": {
+    "symfony/routing": "v4.4.*",
+    "symfony/config": "v4.4.*",
+    "symfony/console": "v4.4.*",
+    "symfony/http-kernel": "v4.4.*",
+    "symfony/http-foundation": "v4.4.*",
+    "symfony/dependency-injection":"v4.4.*",
+    "doctrine/orm": "v2.7.*"
+  },
+
+  "autoload": {
+    "classmap": [
+      "src/Entity"
+    ],
+    "psr-4": {
+      "App\\": "src/"
+    }
+  }
+}

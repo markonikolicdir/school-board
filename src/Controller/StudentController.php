@@ -11,6 +11,7 @@ namespace App\Controller;
 use App\Entity\Grade;
 use App\Entity\Student;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpFoundation\Response;
 
 
 class StudentController
@@ -44,18 +45,41 @@ class StudentController
         foreach ($this->randomGrades() as $value){
             $grade = new Grade();
             $grade->setGrade($value);
-
-
-            var_dump($grade);
-
-//            $this->em->persist($grade);
-//            $this->em->flush();
             $student->addGrades($grade);
         }
 
-
         $this->em->persist($student);
         $this->em->flush();
+    }
+
+    /**
+     * @param $id
+     */
+    public function list()
+    {
+        $list = $this->em->getRepository(Student::class)
+            ->findBy(
+                array(),
+                array('name' => 'ASC')
+            );
+
+        $response = new Response();
+        $response->setContent(json_encode([
+            'data' => $this->studentData($list),
+        ]));
+        $response->headers->set('Content-Type', 'application/json');
+        $response->send();
+    }
+
+    private function studentData($list){
+        $data = [];
+        foreach ($list as $value){
+            $temp = [];
+            $temp['name'] =$value->getName();
+            $temp['id'] =$value->getId();
+            $data[] = $temp;
+        }
+        return $data;
     }
 
     /**

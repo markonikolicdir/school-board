@@ -91,6 +91,14 @@ class Student
     }
 
     /**
+     * @return mixed
+     */
+    public function getGrades()
+    {
+        return $this->grades;
+    }
+
+    /**
      * Student constructor.
      */
     public function __construct()

@@ -12,4 +12,5 @@ namespace App\Service;
 interface schoolBoards
 {
     public function pass();
+    public function export();
 }

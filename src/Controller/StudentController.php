@@ -13,6 +13,8 @@ use App\Entity\Student;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Response;
 
+use App\Service\CSM;
+
 
 class StudentController
 {
@@ -85,9 +87,27 @@ class StudentController
     /**
      * @param $id
      */
-    public function show($id)
+    public function pass($id)
     {
-        echo 'Show student by ' . $id;
+        $student = $this->em->getRepository(Student::class)->findOneBy(array(
+            'id' => $id));
+
+//        var_dump($student->getGrades());
+//        var_dump(count($student->getGrades()));
+
+//        foreach ($student->getGrades() as $value){
+//            var_dump($value->getGrade());
+//        }
+
+        $csm = new CSM($student);
+        $pass = $csm->pass();
+
+        $response = new Response();
+        $response->setContent(json_encode([
+            'pass' => $pass,
+        ]));
+        $response->headers->set('Content-Type', 'application/json');
+        $response->send();
     }
 
     private function random($array){

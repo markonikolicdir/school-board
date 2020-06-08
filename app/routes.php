@@ -20,8 +20,15 @@ $students = new Route(
     array('controller' => 'StudentController', 'method'=>'list')
 );
 
+$pass = new Route(
+    '/student/{id}',
+    array('controller' => 'StudentController', 'method'=>'pass'),
+    array('id' => '[0-9]+')
+);
+
 $routes = new RouteCollection();
 $routes->add('student', $student);
 $routes->add('students', $students);
+$routes->add('pass', $pass);
 
 return $routes;

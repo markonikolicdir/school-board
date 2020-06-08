@@ -60,7 +60,8 @@ class Core implements HttpKernelInterface
             $response = call_user_func_array(array($class, $attributes['method']), array($attributes['id']));
 
         } catch (ResourceNotFoundException $e) {
-            $response = new Response('Not found!', Response::HTTP_NOT_FOUND);
+            $response = new Response('Route Not found!', Response::HTTP_NOT_FOUND);
+            $response->send();
         }
 
         return $response;

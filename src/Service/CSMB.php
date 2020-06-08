@@ -9,10 +9,26 @@
 namespace App\Service;
 
 
+use App\Entity\Student;
+
 class CSMB implements schoolBoards
 {
+    private $student;
+
+    /**
+     * CSMB constructor.
+     * @param Student $student
+     */
+    public function __construct(Student $student)
+    {
+        $this->student = $student;
+    }
     public function pass()
     {
-        // TODO: Implement pass() method.
+        return 'pass';
+    }
+
+    public function export(){
+        return 'xml'
     }
 }

@@ -52,8 +52,7 @@ class Grade
 
     /**
      * Many Student have Many Grades.
-     * @ORM\ManyToMany(targetEntity="Student", inversedBy="grades")
-     * @ORM\JoinTable(name="student_grade")
+     * @ORM\ManyToMany(targetEntity="Student", mappedBy="grades")
      */
     private $students;
 
@@ -63,10 +62,7 @@ class Grade
      */
     public function addStudents(Student $student)
     {
-        if (!$this->students->contains($student)) {
-            $this->students[] = $student;
-        }
-
-        return $this;
+        $student->addGrades($this);
+        $this->students[] = $student;
     }
 }

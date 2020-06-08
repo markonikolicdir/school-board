@@ -1,0 +1,26 @@
+<?php
+
+// Include composer autoloader
+require_once __DIR__."/../vendor/autoload.php";
+
+// Use statements
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Routing\Router;
+use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\Routing\Loader\PhpFileLoader;
+use App\Command\MyRouterDebugCommand;
+
+$context = new RequestContext();
+$locator = new FileLocator(array(__DIR__)); // I needed symfony/config for this
+$router = new Router(
+    new PhpFileLoader($locator), // And this class depends upon too
+    '../app/routes.php',
+    array(),
+    $context
+);
+
+$app = new Application();
+$app->add(new MyRouterDebugCommand(null, $router));
+$app->run();
+?>

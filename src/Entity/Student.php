@@ -67,7 +67,8 @@ class Student
 
     /**
      * Many Student have Many Grades.
-     * @ORM\ManyToMany(targetEntity="Grade", mappedBy="students")
+     * @ORM\ManyToMany(targetEntity="Grade", inversedBy="students", cascade={"persist", "remove" })
+     * @ORM\JoinTable(name="student_grade")
      */
     private $grades;
 
@@ -76,8 +77,9 @@ class Student
      */
     public function addGrades(Grade $grade)
     {
-        $grade->addStudents($this);
-        $this->grades[] = $grade;
+        if (!$this->grades->contains($grade)) {
+            $this->grades[] = $grade;
+        }
     }
 
     /**

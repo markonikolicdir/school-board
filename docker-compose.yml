@@ -1,7 +1,8 @@
-version: '3.2'
+version: '3.3'
 services:
   web:
     container_name: school-board-app
+    restart: always
     build:
       context: .
       dockerfile: Dockerfile
@@ -9,6 +10,11 @@ services:
     - "6080:80"
     volumes:
     - .:/var/www/html
+#    environment:
+#      XDEBUG_ENABLED: 1
+#      DEFAULT_ROOT: /var/www/html/public
+    depends_on:
+      - db
 
   db:
     container_name: school-board-mysql
